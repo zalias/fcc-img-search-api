@@ -1,12 +1,12 @@
 var rp = require("request-promise");
+var History = require("../models/history.js");
 
 exports.search = function (req, res) {
-  var bing_url = "https://api.cognitive.microsoft.com/bing/v5.0/images/search?q=" + encodeURIComponent(req.params.query) + "&count=20"
+  var bing_url = "https://api.cognitive.microsoft.com/bing/v5.0/images/search?q=" + encodeURIComponent(req.params.query) + "&count=20";
   if ('offset' in req.query){
     bing_url += "&offset=" + req.query.offset;
   }
   console.log(bing_url);
-  //TODO: Save req.params.query and Date to MongoDB
   var options = {
     url: bing_url,
     headers: {
@@ -25,6 +25,7 @@ exports.search = function (req, res) {
           "context" : image.hostPageDisplayUrl //Bing sometimes returns partial Source Page Url
         };
       });
+      new History({term : req.params.query}).save();
       res.send(result);
     })
     .catch(function (err) {
@@ -33,5 +34,16 @@ exports.search = function (req, res) {
 };
 
 exports.latest = function(req, res){
-  
+  History
+    .find({})
+    .limit(10)
+    .sort({date: -1})
+    .select({ _id: 0, term : 1, date : 1})
+    .exec(function (err, docs) {
+      if (err){
+        console.log(err);
+        res.end();
+      }
+      res.send(docs);
+    });
 };

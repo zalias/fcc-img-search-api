@@ -10,9 +10,6 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 
-
-//app.get('/new/:url(*)', image.new_url);
-//app.get('/:id([0-9]+)', shortener.short_link);
 app.get('/search/:query', images.search);
 app.get('/latest', images.latest);
 
