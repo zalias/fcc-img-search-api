@@ -1,0 +1,17 @@
+html
+  h1 Bing Image Abstraction Layer
+  h2 See latest searches:
+  pre
+    code
+      p= hostname + 'latest'
+  h2 Search images:
+  h3 Syntax:
+  pre
+    code
+      p= hostname + 'search/<search_term>[?offset=n]'
+  h4 offset is optional
+  h3 Example:
+  pre
+    code
+      p= hostname + 'search/lolcats%20funny'
+      p= hostname + 'search/lolcats%20funny?offset=2'

@@ -12,6 +12,7 @@ app.set('view engine', 'pug');
 
 app.get('/search/:query', images.search);
 app.get('/latest', images.latest);
+app.get('/', images.home_page);
 
 app.listen(process.env.PORT || 8080, function () {
   console.log('App listening at ', process.env.PORT);

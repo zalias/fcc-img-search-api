@@ -47,3 +47,7 @@ exports.latest = function(req, res){
       res.send(docs);
     });
 };
+
+exports.home_page = function(req, res){
+  res.render('index.pug', {hostname : process.env.HOST_NAME});
+};
